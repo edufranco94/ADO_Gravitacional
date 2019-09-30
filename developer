@@ -1,0 +1,98 @@
+package apii_ado_gravitacional;
+
+import java.util.Scanner;
+import javafx.scene.paint.Color;
+
+/**
+ *
+ * @author Edu Franco
+ */
+public class APII_ADO_Gravitacional {
+
+    static Scanner sc = new Scanner(System.in);
+
+    static int tamanhoMatriz(int n) {
+        n = sc.nextInt();
+        return n;
+    }
+
+    static double[][] populaMatriz(double matriz[][]) {
+        for (int i = 0; i < matriz.length; i++) {
+            for (int j = 0; j < matriz[i].length; j++) {
+                System.out.println("Digite o elemente da linha " + (i + 1) + " da coluna " + (j + 1) + ":");
+                matriz[i][j] = sc.nextDouble();
+
+            }
+        }
+        return matriz;
+    }
+
+    static void imprimirMatriz(double matriz[][]) {
+        for (int i = 0; i < matriz.length; i++) {
+            for (int j = 0; j < matriz[i].length; j++) {
+                System.out.print(matriz[i][j] + "\t");
+            }
+            System.out.println(" ");
+        }
+
+    }
+
+    static double gravidadeLinha(double matriz[][]) {
+        int centroLinha = 1;
+        double diferencaReal = 1;
+
+        for (int i = 0; i < matriz.length - 1; i++) {
+            double somaAcima = 0;
+            double somaAbaixo = 0;
+            double diferencaLinha = 0;
+            int centroTeste = (i + 1);
+
+            for (int j = 0; j < matriz.length; j++) {
+                if (j != 0 || i == centroTeste) {
+                    break;
+                }
+                
+                for (int k = 0; k<matriz.length; k++) {
+                    if (i < centroTeste) {
+                    somaAcima = matriz[i][j] + somaAcima;
+                } else {
+                    somaAbaixo = matriz[i][j] + somaAbaixo;
+                }
+                }
+            }
+            if (somaAbaixo > somaAcima) {
+                diferencaLinha = somaAbaixo - somaAcima;
+            } else {
+                diferencaLinha = somaAcima - somaAbaixo;
+            }
+            if (diferencaLinha < diferencaReal) {
+                diferencaReal = diferencaLinha;
+                centroTeste = i;
+            }
+            centroLinha = centroTeste;
+        }
+        return centroLinha;
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        new Scanner(System.in);
+        int n = 0, li, cl;
+
+        System.out.println("Digite a quantidade de linhas:");
+        li = tamanhoMatriz(n);
+        System.out.println("Digite a quantidade de colunas:");
+        cl = tamanhoMatriz(n);
+
+        double matriz[][] = new double[li][cl];
+
+        populaMatriz(matriz);
+        imprimirMatriz(matriz);
+
+        int centroLinha = (int) gravidadeLinha(matriz);
+
+        System.out.println("O centro da linha é: " + centroLinha);
+
+    }
+
+}
